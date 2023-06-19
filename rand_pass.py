@@ -35,7 +35,7 @@ def generate_password(amount, length):
     # Validate user input amount
     while not correct_amount:
         try:
-            amount = int(input("How many passwords would you like to generate? (1-14): "))
+            amount = int(input("How many passwords would you like to generate? (Enter 1-14): "))
             if amount < 1 or amount > 14:
                 print("\nPlease enter a number between 1 and 14")
             else:
@@ -46,7 +46,7 @@ def generate_password(amount, length):
     # Validate user input length
     while not correct_length:
         try:
-            length = int(input("Enter the length of your password (13-128): "))
+            length = int(input("Enter the length of your password (Enter 13-128): "))
             if length < 13 or length > 128:
                 print("\nPlease enter a number between 13 and 128")
             else:
@@ -137,7 +137,7 @@ def save_to_windows(passwords):
     while not file_flag:
         try:
             # Get the file name
-            file_name = input("Enter the file name: ")
+            file_name = input("Enter the file name(Include file type - .txt,.csv and etc ...): ")
             file_path = os.path.join(folder_path if folder_name else desktop_path, file_name)
             file_flag = True
         except ValueError:
@@ -171,7 +171,7 @@ def save_to_mac(passwords):
     while not file_flag:
         try:
             # Get the file name
-            file_name = input("Enter the file name: ")
+            file_name = input("Enter the file name(Include file type - .txt,.csv and etc ...): ")
             file_path = os.path.join(folder_path, file_name)
             file_flag = True
         except ValueError:
@@ -214,4 +214,3 @@ main()
 #         - If not, prompt the user to enter a new file name.
 # - Implement the above steps for both Mac and Windows operating systems.
 # - Integrate the functionality into a GUI using Next.js and Tailwind CSS.
-# - Figure out why passwords arent saving to test.txt file on Desktop.
