@@ -120,7 +120,7 @@ def save_to_windows(passwords):
     os_name = "Windows"
     
     # Get the desktop path
-    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    desktop_path = os.path.expanduser("~/Desktop")
 
     folder_flag = False
     while not folder_flag:
