@@ -14,6 +14,7 @@ This is a simple password generator program written in Python for my Lovely girl
 - Beneath the "Download Python" button, you will see text that says "Looking for Python with a different OS?". Click on the link below that text to download Python for Mac OS. Choose your OS version from the list and download the installer.
 
 - pandas (install using `pip install pandas`)
+- **Type pip install pandas in terminal. Scroll down for instructions on opening terminal**
 - Create a file and/or folder on your **desktop** to save the passwords to
 
 ## Usage
