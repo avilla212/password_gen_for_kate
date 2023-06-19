@@ -37,7 +37,7 @@ This is a simple password generator program written in Python for my Lovely girl
 
 3. Once in the terminal, navigate to the directory where the extracted code files are located using the `cd` command. For example:
 
-   ```bash
+   
    cd /path/to/password-generator
 
 4. Then type in the following command to run the program:
