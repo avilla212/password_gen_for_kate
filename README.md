@@ -4,8 +4,8 @@ This is a simple password generator program written in Python for my Lovely girl
 
 ## Requirements
 
-
 - Be on a computer running Windows or Mac OS
+- Have a file and/folder already create **on your desktop** to save the passwords to
 - Python 3.x
 
 - **Instructions to download Python** Link to download Python: [Link to download Python](https://www.python.org/downloads/)
