@@ -2,8 +2,10 @@ import secrets
 import pandas as pd
 import os
 
-
+# Function to check if the password meets the requirements
 def pass_requirements(password):
+    
+    # Flag variables to check if the password has at least one of each requirement
     has_lower = False
     has_upper = False
     has_special = False
@@ -26,9 +28,11 @@ def pass_requirements(password):
 
 
 def generate_password(amount, length):
+    # Flag variables to check if the user input is valid
     correct_amount = False
     correct_length = False
 
+    # Validate user input amount
     while not correct_amount:
         try:
             amount = int(input("How many passwords would you like to generate? (1-14): "))
@@ -39,6 +43,7 @@ def generate_password(amount, length):
         except ValueError as e:
             print(e)
 
+    # Validate user input length
     while not correct_length:
         try:
             length = int(input("Enter the length of your password (13-128): "))
@@ -49,10 +54,12 @@ def generate_password(amount, length):
         except ValueError as e:
             print(e)
 
+    # List to store the passwords
     passwords = []
 
+    # Generate the passwords
     for _ in range(amount):
-        # used to make sure only passwords that meet the requirements are added to the list
+        # Flag variable to check if the password meets the requirements
         password_found = False
         while not password_found:
             try:
@@ -65,13 +72,14 @@ def generate_password(amount, length):
 
     return passwords
 
-
+# Function to generate the password
 def rand_pass(length):
+    
     char_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"
     password = "".join(secrets.choice(char_set) for _ in range(length))
     return password
 
-
+# Function to save the passwords to a file
 def save_to_file(passwords):
     answer = input("Would you like to save your passwords to a file? (y/n): ")
 
@@ -88,6 +96,7 @@ def save_to_file(passwords):
         print("1. Windows")
         print("2. Mac")
 
+        # Flag variable to check if the user input is valid
         os_flag = False
         while not os_flag:
             try:
@@ -105,14 +114,18 @@ def save_to_file(passwords):
         elif os_choice == 2:
             save_to_mac(passwords)
 
-
+# Function to save the passwords to a Windows file
 def save_to_windows(passwords):
+    # Flag variable to check if the user input is valid
     os_name = "Windows"
+    
+    # Get the desktop path
     desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
 
     folder_flag = False
     while not folder_flag:
         folder_name = input("Enter the folder name (leave blank for the desktop): ")
+        # If the user enters a folder name, create the folder
         if folder_name:
             folder_path = os.path.join(desktop_path, folder_name)
             os.makedirs(folder_path, exist_ok=True)
@@ -123,25 +136,29 @@ def save_to_windows(passwords):
     file_flag = False
     while not file_flag:
         try:
+            # Get the file name
             file_name = input("Enter the file name: ")
             file_path = os.path.join(folder_path if folder_name else desktop_path, file_name)
             file_flag = True
         except ValueError:
             print("Invalid file name. Please try again.")
     try:
+        # Write the passwords to the file
         with open(file_path, "w") as file:
             file.write("\n".join(passwords))
         print(f"Passwords saved to {os_name} file path: {file_path}")
     except OSError as e:
         print(f"Error occurred while saving passwords: {str(e)}")
 
-
+# Function to save the passwords to a Mac file
 def save_to_mac(passwords):
     os_name = "Mac"
 
     folder_flag = False
+    # Get the Documents path
     while not folder_flag:
         try:
+            # Get the folder name
             folder_name = input("Enter the folder name (leave blank for desktop): ")
             folder_path = os.path.expanduser("~/Documents/" + folder_name)
             os.makedirs(folder_path, exist_ok=True)
@@ -150,8 +167,10 @@ def save_to_mac(passwords):
             print("Invalid folder name. Please try again.")
 
     file_flag = False
+    # Get the file name
     while not file_flag:
         try:
+            # Get the file name
             file_name = input("Enter the file name: ")
             file_path = os.path.join(folder_path, file_name)
             file_flag = True
@@ -159,6 +178,7 @@ def save_to_mac(passwords):
             print("Invalid file name. Please try again.")
 
     try:
+        # Write the passwords to the file
         with open(file_path, "w") as file:
             file.write("\n".join(passwords))
         print(f"Passwords saved to {os_name} file path: {file_path}")
@@ -166,7 +186,9 @@ def save_to_mac(passwords):
         print(f"Error occurred while saving passwords: {str(e)}")
 
 
+# Function to print the passwords to the console
 def print_passwords(passwords):
+    
     df = pd.DataFrame(passwords, columns=[""])
     df.index = range(1, len(df) + 1)
     print("\nHere are your passwords: ")
@@ -175,6 +197,7 @@ def print_passwords(passwords):
 
 
 def main():
+    
     passwords = generate_password(0, 0)
     save_to_file(passwords)
 
