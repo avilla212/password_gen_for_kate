@@ -181,14 +181,13 @@ def main():
 
 main()
 
-# TODO: 
-# Add function to let user create folder and/or file name if needed
-# In the functions, check if the folder and/or file name exist
-    # If the folder name exists, ask if they want to overwrite the folder
-    # If not, ask for a new folder name
-# If the file name exists, ask if they want to overwrite the file
-    # If not, ask for a new file name
 
-# Implement steps above for mac and windows 
-
-# IMPORTANT: Implement into a GUI using next js and tailwind css
+# TODO:
+# - Add functionality to allow the user to create a folder and/or file name if needed.
+# - Check if the folder and/or file name already exist.
+#     - If the folder name exists, ask the user if they want to overwrite the folder.
+#         - If not, prompt the user to enter a new folder name.
+#     - If the file name exists, ask the user if they want to overwrite the file.
+#         - If not, prompt the user to enter a new file name.
+# - Implement the above steps for both Mac and Windows operating systems.
+# - Integrate the functionality into a GUI using Next.js and Tailwind CSS.
