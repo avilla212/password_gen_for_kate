@@ -6,7 +6,7 @@ This is a simple password generator program written in Python for my Lovely girl
 
 - Python 3.x
 - pandas (install using `pip install pandas`)
-- Create a file and/or folder to save the passwords to on your **desktop**
+- Create a file and/or folder on your **desktop** to save the passwords to
 
 ## Usage
 
