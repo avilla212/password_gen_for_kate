@@ -124,14 +124,17 @@ def save_to_windows(passwords):
 
     folder_flag = False
     while not folder_flag:
-        folder_name = input("Enter the folder name (leave blank for the desktop): ")
-        # If the user enters a folder name, create the folder
-        if folder_name:
-            folder_path = os.path.join(desktop_path, folder_name)
-            os.makedirs(folder_path, exist_ok=True)
-            folder_flag = True
-        else:
-            folder_flag = True
+        try:
+            folder_name = input("Enter the folder name (leave blank for the desktop): ")
+            # If the user enters a folder name, create the folder
+            if folder_name:
+                folder_path = os.path.join(desktop_path, folder_name)
+                os.makedirs(folder_path, exist_ok=True)
+                folder_flag = True
+            else:
+                folder_flag = True
+        except ValueError:
+            print("Invalid folder name. Please try again.")
 
     file_flag = False
     while not file_flag:
@@ -160,9 +163,13 @@ def save_to_mac(passwords):
         try:
             # Get the folder name
             folder_name = input("Enter the folder name (leave blank for desktop): ")
-            folder_path = os.path.expanduser("~/Documents/" + folder_name)
-            os.makedirs(folder_path, exist_ok=True)
-            folder_flag = True
+            if folder_name:
+                folder_path = os.path.expanduser("~/Documents/" + folder_name)
+                os.makedirs(folder_path, exist_ok=True)
+                folder_flag = True
+            else:
+                folder_flag = True
+        
         except ValueError:
             print("Invalid folder name. Please try again.")
 
