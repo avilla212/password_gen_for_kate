@@ -1,7 +1,7 @@
 import secrets 
+import pandas as pd
+import os
 
-global length
-global password
 
 def pass_requirements(password):
     
@@ -25,29 +25,147 @@ def pass_requirements(password):
     
     return True    
 
-def rand_pass(length):
-
-    char_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"
-    password_found = False
+def generate_password(amount,length):
+    correct_amount = False
+    correct_length = False
     
-    while not password_found:
-        try: 
-            if length < 14 or length > 128 or length == "":
-                print("Please enter a number between 14 and 128")
-                length = int(input("Enter the length of your password: "))
+    while not correct_amount:
+        try:
+            amount = int(input("How many passwords would you like to generate?(1-14): "))
+            if amount < 1 or amount > 14 or amount == "":
+                print("\nPlease enter a number between 1 and 10")
             else:
-                password = ''.join((secrets.choice(char_set) for _ in range(length)))
-                if pass_requirements(password):
-                    password_found = True
+                correct_amount = True
         except ValueError as e:
             print(e)
-            length = int(input("Enter the length of your password: "))
+    
+    while not correct_length:
+        try:
+            length = int(input("Enter the length of your password(13-128): "))
+            if length < 13 or length > 128 or length == "":
+                print("\nPlease enter a number between 13 and 128")
+            else:
+                correct_length = True
+        except ValueError as e:
+            print(e)
+    
+    passwords = []
+    
+    for _ in range(amount):
+        
+        # used to make sure only passwords that meet the requirements are added to the list
+        password_found = False
+        while not password_found:
+            try:
+                password = rand_pass(length)
+                if pass_requirements(password):
+                    passwords.append(password)
+                    password_found = True
+            except ValueError as e:
+                print(e)
+    
+    return passwords
+    
+def rand_pass(length):
+    
+    char_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"
+    password = "".join(secrets.choice(char_set) for _ in range(length))
     return password
 
+def save_to_file(passwords):
+    answer = input("Would you like to save your passwords to a file? (y/n): ")
+
+    # Validate user input
+    while answer.lower() != "y" and answer.lower() != "n":
+        answer = input("Please enter 'y' or 'n': ")
+
+    if answer.lower() == "n":
+        print_passwords(passwords)
+        return
+
+    if answer.lower() == "y":
+        print("What operating system are you using?")
+        print("1. Windows")
+        print("2. Mac")
+
+        os_flag = False
+        while not os_flag:
+            try:
+                os_choice = int(input("Enter the number corresponding to your operating system: "))
+                if os_choice in [1, 2]:
+                    os_flag = True
+                else:
+                    print("Invalid input. Please enter '1' for Windows or '2' for Mac.")
+            except ValueError:
+                print("Invalid input. Please enter '1' for Windows or '2' for Mac.")
+
+        if os_choice == 1:
+            os_name = "Windows"
+            desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+
+            folder_flag = False
+            while not folder_flag:
+                folder_name = input("Enter the folder name (leave blank for the desktop): ")
+                if folder_name:
+                    folder_path = os.path.join(desktop_path, folder_name)
+                    os.makedirs(folder_path, exist_ok=True)
+                    folder_flag = True
+                else:
+                    folder_flag = True
+
+            file_flag = False
+            while not file_flag:
+                try:
+                    file_name = input("Enter the file name: ")
+                    file_path = os.path.join(folder_path if folder_name else desktop_path, file_name)
+                    file_flag = True
+                except ValueError:
+                    print("Invalid file name. Please try again.")
+
+        elif os_choice == 2:
+            os_name = "Mac"
+
+            folder_flag = False
+            while not folder_flag:
+                try:
+                    folder_name = input("Enter the folder name: ")
+                    folder_path = os.path.expanduser("~/Documents/" + folder_name)
+                    os.makedirs(folder_path, exist_ok=True)
+                    folder_flag = True
+                except ValueError:
+                    print("Invalid folder name. Please try again.")
+
+            file_flag = False
+            while not file_flag:
+                try:
+                    file_name = input("Enter the file name: ")
+                    file_path = os.path.join(folder_path, file_name)
+                    file_flag = True
+                except ValueError:
+                    print("Invalid file name. Please try again.")
+
+        try:
+            with open(file_path, "w") as file:
+                file.write("\n".join(passwords))
+            print(f"Passwords saved to {os_name} file path: {file_path}")
+        except OSError as e:
+            print(f"Error occurred while saving passwords: {str(e)}")
+
+def print_passwords(passwords):
+    
+    df = pd.DataFrame(passwords,columns=[""])
+    df.index = range(1,len(df)+1)
+    print("\nHere are your passwords: ")
+    df.to_string(index=True,justify="right")
+    print(df)
+
 def main():
-    length = int(input("Enter the length of your password: "))
-    password = rand_pass(length)
-    print(f"Your password is: {password}")
+    
+    amount,length = 0,0
+    passwords = generate_password(amount,length)
+
+    save_to_file(passwords)
+   
     
 main()
 
