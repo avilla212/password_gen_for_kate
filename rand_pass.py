@@ -180,3 +180,15 @@ def main():
 
 
 main()
+
+# TODO: 
+# Add function to let user create folder and/or file name if needed
+# In the functions, check if the folder and/or file name exist
+    # If the folder name exists, ask if they want to overwrite the folder
+    # If not, ask for a new folder name
+# If the file name exists, ask if they want to overwrite the file
+    # If not, ask for a new file name
+
+# Implement steps above for mac and windows 
+
+# IMPORTANT: Implement into a GUI using next js and tailwind css
