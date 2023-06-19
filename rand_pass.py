@@ -214,3 +214,4 @@ main()
 #         - If not, prompt the user to enter a new file name.
 # - Implement the above steps for both Mac and Windows operating systems.
 # - Integrate the functionality into a GUI using Next.js and Tailwind CSS.
+# - Figure out why passwords arent saving to test.txt file on Desktop.
