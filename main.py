@@ -1,6 +1,10 @@
 import secrets
 import pandas as pd
 import os
+import time
+
+def sleep_one_point_five():
+    time.sleep(1.5)
 
 # Function to check if the password meets the requirements
 def pass_requirements(password):
@@ -128,7 +132,7 @@ def save_to_windows(passwords):
             folder_name = input("Enter the folder name (leave blank for the desktop): ")
             # If the user enters a folder name, create the folder
             if folder_name:
-                folder_path = os.path.join(desktop_path, folder_name)
+                folder_path = os.path .join(desktop_path, folder_name)
                 os.makedirs(folder_path, exist_ok=True)
                 folder_flag = True
             else:
@@ -157,41 +161,39 @@ def save_to_windows(passwords):
 def save_to_mac(passwords):
     os_name = "Mac"
 
+    desktop_path = os.path.expanduser("~/Desktop")
+
     folder_flag = False
-    # Get the Documents path
+
     while not folder_flag:
-        try:
-            # Get the folder name
-            folder_name = input("Enter the folder name (leave blank for desktop): ")
+        try: 
+            folder_name = input("Enter the folder name (leave blank for the desktop): ")
+            # if the user enters a folder name we will create the path 
             if folder_name:
-                folder_path = os.path.expanduser("~/Documents/" + folder_name)
+                folder_path = os.path.join(desktop_path, folder_name)
                 os.makedirs(folder_path, exist_ok=True)
                 folder_flag = True
+            # if the user does not enter a folder name we will just use the desktop path
             else:
                 folder_flag = True
-        
         except ValueError:
             print("Invalid folder name. Please try again.")
-
     file_flag = False
-    # Get the file name
     while not file_flag:
         try:
-            # Get the file name
+            # get the file name 
             file_name = input("Enter the file name(Include file type - .txt,.csv and etc ...): ")
-            file_path = os.path.join(folder_path, file_name)
+            file_path = os.path.join(folder_path if folder_name else desktop_path, file_name)
             file_flag = True
         except ValueError:
             print("Invalid file name. Please try again.")
-
     try:
-        # Write the passwords to the file
-        with open(file_path, "w") as file:
+        # write the passwords to the file
+        with open(file_path,"w") as file:
             file.write("\n".join(passwords))
         print(f"Passwords saved to {os_name} file path: {file_path}")
     except OSError as e:
-        print(f"Error occurred while saving passwords: {str(e)}")
-
+        print(f"Error occured while saving passowords: {str(e)}")        
 
 # Function to print the passwords to the console
 def print_passwords(passwords):
@@ -201,6 +203,9 @@ def print_passwords(passwords):
     print("\nHere are your passwords: ")
     df.to_string(index=True, justify="right")
     print(df)
+
+def border():
+    print("-" * 50)
 
 
 def main():
@@ -212,12 +217,3 @@ def main():
 main()
 
 
-# TODO:
-# - Add functionality to allow the user to create a folder and/or file name if needed.
-# - Check if the folder and/or file name already exist.
-#     - If the folder name exists, ask the user if they want to overwrite the folder.
-#         - If not, prompt the user to enter a new folder name.
-#     - If the file name exists, ask the user if they want to overwrite the file.
-#         - If not, prompt the user to enter a new file name.
-# - Implement the above steps for both Mac and Windows operating systems.
-# - Integrate the functionality into a GUI using Next.js and Tailwind CSS.
