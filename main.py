@@ -1,6 +1,11 @@
 import secrets
 import pandas as pd
 import os
+import time 
+
+def sleep_time():
+    print("...")
+    time.sleep(1.5)
 
 # Function to check if the password meets the requirements
 def pass_requirements(password):
@@ -202,15 +207,15 @@ def print_passwords(passwords):
     df.to_string(index=True, justify="right")
     print(df)
 
-
 def main():
     
     passwords = generate_password(0, 0)
     save_to_file(passwords)
 
-
 main()
 
+
+# IMPORTANT: Work on welcome menu first. Then work on the TODO list.
 
 # TODO:
 # - Add functionality to allow the user to create a folder and/or file name if needed.
